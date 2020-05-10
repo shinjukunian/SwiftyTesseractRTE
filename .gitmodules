@@ -1,0 +1,3 @@
+[submodule "SwiftyTesseract"]
+	path = SwiftyTesseract
+	url = git@github.com:shinjukunian/SwiftyTesseract.git

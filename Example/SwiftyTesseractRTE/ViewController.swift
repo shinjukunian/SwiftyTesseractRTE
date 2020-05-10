@@ -10,7 +10,6 @@ import UIKit
 import AVFoundation
 import AudioToolbox
 import SwiftyTesseract
-import SwiftyTesseractRTE
 
 class ViewController: UIViewController {
 
@@ -100,7 +99,7 @@ class ViewController: UIViewController {
     
     // RealTimeEngine Setup
     
-    let swiftyTesseract = SwiftyTesseract(language: .english)
+    let swiftyTesseract = SwiftyTesseract(language: .english, dataSource: Bundle.main, engineMode: .lstmOnly)
     engine = RealTimeEngine(swiftyTesseract: swiftyTesseract, desiredReliability: .verifiable) { [weak self] recognizedString in
       AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
       DispatchQueue.main.async { 

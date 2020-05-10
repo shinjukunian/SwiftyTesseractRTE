@@ -7,6 +7,8 @@
 //
 
 import AVFoundation
+import CoreImage
+import UIKit
 
 struct ImageProcessor {
   private var ciContext: CIContext

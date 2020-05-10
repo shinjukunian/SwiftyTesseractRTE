@@ -7,6 +7,7 @@
 //
 
 import AVFoundation
+import UIKit
 
 /// To be implemented if custom image processing is needed.
 /// The default SwiftyTesseractRTE implementation does a small

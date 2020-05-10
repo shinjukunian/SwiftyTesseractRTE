@@ -1,7 +1,7 @@
 import XCTest
 import SwiftyTesseract
 import AVFoundation
-@testable import SwiftyTesseractRTE
+
 
 class Tests: XCTestCase {
   

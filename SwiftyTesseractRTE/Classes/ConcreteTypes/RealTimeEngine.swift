@@ -195,22 +195,19 @@ extension RealTimeEngine {
   }
   
   private func enqueueAndEvalutateRecognitionResults(from image: UIImage) {
-    swiftyTesseract.performOCR(on: image) { [weak self] recognizedString in
-      guard
-        let recognizedString = recognizedString,
-        let self = self
-      else { return }
-
-      self.recognitionQueue.enqueue(recognizedString)
-      
-      guard
-        self.recognitionQueue.allValuesMatch,
-        let result = self.recognitionQueue.dequeue()
-      else { return }
-      
-      self.onRecognitionComplete?(result)
-      self.recognitionQueue.clear()
+    let result=swiftyTesseract.performOCR(on: image)
+    switch result {
+    case .success(let recognizedString):
+        self.recognitionQueue.enqueue(recognizedString)
+    case .failure(let errror):
+        print(errror.localizedDescription)
     }
+    guard self.recognitionQueue.allValuesMatch,
+           let recognitionResult = self.recognitionQueue.dequeue()
+         else { return }
+         
+         self.onRecognitionComplete?(recognitionResult)
+         self.recognitionQueue.clear()
   }
 }
 
