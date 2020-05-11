@@ -118,4 +118,25 @@ class VideoManager: AVManager {
         configure(captureSession)
         sessionQueue.resume()
     }
+    
+    var focusPointOfInterest: CGPoint{
+        get{
+            if let input =  self.captureSession.inputs.first as? AVCaptureDeviceInput{
+                let pt=self.previewLayer.layerPointConverted(fromCaptureDevicePoint: input.device.focusPointOfInterest)
+                return pt
+            }
+            return .zero
+        }
+        set{
+            guard let input =  self.captureSession.inputs.first as? AVCaptureDeviceInput, input.device.isFocusModeSupported(.continuousAutoFocus) else {return}
+            try? input.device.lockForConfiguration()
+            defer {
+                input.device.unlockForConfiguration()
+            }
+            let devicePT = self.previewLayer.captureDevicePointConverted(fromLayerPoint: newValue)
+            input.device.focusPointOfInterest = devicePT
+            input.device.focusMode = .continuousAutoFocus
+            
+        }
+    }
 }

@@ -63,7 +63,13 @@ public class RealTimeEngine: NSObject, SceneStability {
       /// The region within the AVCaptureVideoPreviewLayer that OCR is to be performed. If using a UIView to
       /// define the region of interest this **must** be assigned as the UIView's frame and
       /// be a subview of the the AVCaptureVideoPreviewLayer's parent view.
-    public var regionOfInterest: CGRect?
+    public var regionOfInterest: CGRect?{
+        didSet{
+            if let roi=regionOfInterest{
+                self.avManager.focusPointOfInterest = CGPoint(x: roi.midX, y: roi.midY)
+            }
+        }
+    }
 
       /// Sets recognition to be running or not. Default is **true**. Setting the value to false will
       /// allow the preview to be active without processing incoming video frames.

@@ -27,4 +27,6 @@ public protocol AVManager: class {
   /// the paramters of `capture(_:didOutput:from:)` to `RealTimeEngine`'s implementation
   /// otherwise they will not be received to be processed for OCR
   var delegate: AVCaptureVideoDataOutputSampleBufferDelegate? { get set }
+    
+    var focusPointOfInterest:CGPoint {get set}
 }
