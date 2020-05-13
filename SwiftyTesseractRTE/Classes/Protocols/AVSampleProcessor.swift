@@ -33,4 +33,6 @@ public protocol AVSampleProcessor {
   ///   - previewLayer: Internal `RealTimeEngine
   /// - Returns: Final `UIImage` ready for OCR
   func crop(_ image: UIImage, toBoundsOf areaOfInterest: CGRect, containedIn previewLayer: AVCaptureVideoPreviewLayer) -> UIImage?
+    
+  func prepareUIImage(from sampleBuffer: CMSampleBuffer, orientation: CGImagePropertyOrientation) -> UIImage?
 }

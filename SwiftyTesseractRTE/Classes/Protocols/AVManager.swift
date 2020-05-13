@@ -29,6 +29,8 @@ public protocol AVManager: class {
   var delegate: AVCaptureVideoDataOutputSampleBufferDelegate? { get set }
     
   var focusPointOfInterest:CGPoint {get set}
+    
+  var videoOrientation:AVCaptureVideoOrientation {get set}
 }
 
 

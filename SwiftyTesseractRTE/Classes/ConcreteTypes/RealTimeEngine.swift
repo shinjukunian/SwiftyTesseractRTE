@@ -51,6 +51,14 @@ public class RealTimeEngine: NSObject, SceneStability {
     var currentlyAnalyzedPixelBuffer: CVPixelBuffer?
     var currentFrame=0
     
+    var deviceOrientation : UIDeviceOrientation = UIDevice.current.orientation{
+        didSet{
+            if let newVideoOrientation = AVCaptureVideoOrientation(deviceOrientation: deviceOrientation){
+                self.avManager.videoOrientation = newVideoOrientation
+            }
+        }
+    }
+    
     lazy var ciContext:CIContext={
         guard let device=MTLCreateSystemDefaultDevice() else{fatalError()}
         let ctx=CIContext(mtlDevice: device)
@@ -251,8 +259,8 @@ public class RealTimeEngine: NSObject, SceneStability {
       
       private func convertAndCrop(_ sampleBuffer: CMSampleBuffer) -> UIImage? {
         guard
-          let processedImage = imageProcessor.convertToGrayscaleUiImage(from: sampleBuffer),
-          let regionOfInterest = regionOfInterest
+            let processedImage = imageProcessor.prepareUIImage(from: sampleBuffer, orientation: CGImagePropertyOrientation(deviceOrientation: self.deviceOrientation)),
+            let regionOfInterest = regionOfInterest
         else { return nil }
         
         return imageProcessor.crop(processedImage,

@@ -7,12 +7,21 @@
 //
 
 import AVFoundation
+import UIKit
 
 class VideoManager: AVManager, ZoomableAVManager {
   
     private let sessionQueue: DispatchQueue
     private let mediaType: AVMediaType
-    private let videoOrientation: AVCaptureVideoOrientation
+    
+    var videoOrientation: AVCaptureVideoOrientation{
+        didSet{
+            if let videoPreviewLayerConnection = self.previewLayer.connection {
+                videoPreviewLayerConnection.videoOrientation = videoOrientation
+            }
+        }
+    }
+    
     private let cameraPosition: AVCaptureDevice.Position
 
     private(set) var previewLayer: AVCaptureVideoPreviewLayer
@@ -56,17 +65,18 @@ class VideoManager: AVManager, ZoomableAVManager {
 
         self.previewLayer.session = self.captureSession
         self.previewLayer.videoGravity = .resizeAspectFill
-        }
-
-        private func isAuthorized(for mediaType: AVMediaType) -> Bool {
-        switch AVCaptureDevice.authorizationStatus(for: mediaType) {
-        case .authorized:
-          return true
-        case .notDetermined:
-          requestPermission(for: mediaType)
-          return false
-        default:
-          return false
+    }
+        
+    
+    private func isAuthorized(for mediaType: AVMediaType) -> Bool {
+            switch AVCaptureDevice.authorizationStatus(for: mediaType) {
+            case .authorized:
+              return true
+            case .notDetermined:
+              requestPermission(for: mediaType)
+              return false
+            default:
+              return false
         }
     }
 
@@ -142,6 +152,7 @@ class VideoManager: AVManager, ZoomableAVManager {
             }
             let devicePT = self.previewLayer.captureDevicePointConverted(fromLayerPoint: newValue)
             input.device.focusPointOfInterest = devicePT
+            input.device.autoFocusRangeRestriction = .near
             input.device.focusMode = .continuousAutoFocus
             
         }

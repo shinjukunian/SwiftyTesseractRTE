@@ -9,6 +9,7 @@
 import AVFoundation
 import CoreImage
 import UIKit
+import CoreMedia
 
 struct ImageProcessor {
   private var ciContext: CIContext
@@ -20,6 +21,12 @@ struct ImageProcessor {
 
 // MARK: - Helper Functions
 extension ImageProcessor {
+    
+    private func rotate(image:CIImage, toOrientation:CGImagePropertyOrientation)->CIImage{
+        let outImage = image.oriented(toOrientation)
+        return outImage
+    }
+    
   private func adjustColors(in ciImage: CIImage) -> CIImage? {
     let filter = CIFilter(name: "CIColorControls",
                           parameters: [kCIInputImageKey: ciImage,
@@ -27,6 +34,7 @@ extension ImageProcessor {
                                        kCIInputContrastKey: 1.45])
     return filter?.outputImage
   }
+    
   
   private func grayscaled(_ image: CGImage) -> CGImage? {
     let colorSpace = CGColorSpaceCreateDeviceGray()
@@ -80,16 +88,29 @@ extension ImageProcessor {
 }
 
 extension ImageProcessor: AVSampleProcessor {
-  func convertToGrayscaleUiImage(from sampleBuffer: CMSampleBuffer) -> UIImage? {
-    return CMSampleBufferGetImageBuffer(sampleBuffer)
-        .flatMap(
-          CIImage.init(cvImageBuffer:) >>>
-          adjustColors >>>
-          ciContext.createCGImage >>>
-          grayscaled >>>
-          UIImage.init
-        )
+    
+    func prepareUIImage(from sampleBuffer: CMSampleBuffer, orientation: CGImagePropertyOrientation) -> UIImage? {
+        guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {return nil}
+        let input=CIImage(cvImageBuffer:imageBuffer)
+        let rotated = self.rotate(image: input, toOrientation: orientation)
+        guard let adjusted = self.adjustColors(in: rotated),
+            let cg = self.ciContext.createCGImage(adjusted),
+            let grayScaled=self.grayscaled(cg)
+        else{return nil}
+        
+        return UIImage(cgImage: grayScaled)
   }
+    
+    func convertToGrayscaleUiImage(from sampleBuffer: CMSampleBuffer) -> UIImage? {
+      return CMSampleBufferGetImageBuffer(sampleBuffer)
+          .flatMap(
+            CIImage.init(cvImageBuffer:) >>>
+            adjustColors >>>
+            ciContext.createCGImage >>>
+            grayscaled >>>
+            UIImage.init
+          )
+    }
   
   func crop(_ image: UIImage, toBoundsOf areaOfInterest: CGRect, containedIn previewLayer: AVCaptureVideoPreviewLayer) -> UIImage? {
     return crop(image, toBoundsOf: previewLayer).flatMap { image in
