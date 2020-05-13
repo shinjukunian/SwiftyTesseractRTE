@@ -28,5 +28,13 @@ public protocol AVManager: class {
   /// otherwise they will not be received to be processed for OCR
   var delegate: AVCaptureVideoDataOutputSampleBufferDelegate? { get set }
     
-    var focusPointOfInterest:CGPoint {get set}
+  var focusPointOfInterest:CGPoint {get set}
+}
+
+
+public protocol ZoomableAVManager: AVManager{
+    
+    var minZoomFactor: CGFloat {get}
+    var maxZoomFactor: CGFloat {get}
+    var zoomFactor: CGFloat {get set}
 }

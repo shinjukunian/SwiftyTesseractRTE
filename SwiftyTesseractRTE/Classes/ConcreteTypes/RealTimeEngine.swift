@@ -70,6 +70,22 @@ public class RealTimeEngine: NSObject, SceneStability {
             }
         }
     }
+    
+    var zoomScale:CGFloat{
+        set{
+            if let z=self.avManager as? ZoomableAVManager{
+                z.zoomFactor = newValue
+            }
+        }
+        get{
+            if let z=self.avManager as? ZoomableAVManager{
+                return z.zoomFactor
+            }
+            else{
+                return 1
+            }
+        }
+    }
 
       /// Sets recognition to be running or not. Default is **true**. Setting the value to false will
       /// allow the preview to be active without processing incoming video frames.

@@ -8,7 +8,7 @@
 
 import AVFoundation
 
-class VideoManager: AVManager {
+class VideoManager: AVManager, ZoomableAVManager {
   
     private let sessionQueue: DispatchQueue
     private let mediaType: AVMediaType
@@ -30,6 +30,13 @@ class VideoManager: AVManager {
         }
     }
     
+    var minZoomFactor: CGFloat{
+        return (self.captureSession.inputs.first as? AVCaptureDeviceInput)?.device.minAvailableVideoZoomFactor ?? 1
+    }
+    
+    var maxZoomFactor: CGFloat{
+        return (self.captureSession.inputs.first as? AVCaptureDeviceInput)?.device.maxAvailableVideoZoomFactor ?? 1
+    }
 
     init(previewLayer: AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer(),
        captureSession: AVCaptureSession = AVCaptureSession(),
@@ -137,6 +144,22 @@ class VideoManager: AVManager {
             input.device.focusPointOfInterest = devicePT
             input.device.focusMode = .continuousAutoFocus
             
+        }
+    }
+    
+    var zoomFactor: CGFloat{
+        set{
+            guard newValue > self.minZoomFactor,
+                newValue < self.maxZoomFactor,
+                let input =  self.captureSession.inputs.first as? AVCaptureDeviceInput else {return}
+            try? input.device.lockForConfiguration()
+            defer {
+                input.device.unlockForConfiguration()
+            }
+            input.device.videoZoomFactor = newValue
+        }
+        get{
+            return (self.captureSession.inputs.first as? AVCaptureDeviceInput)?.device.videoZoomFactor ?? 1
         }
     }
 }
