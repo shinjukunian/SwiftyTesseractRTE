@@ -29,6 +29,8 @@ class ViewController: UIViewController {
   var recognitionButton: UIButton!
   var recognitionTitleLabel: UILabel!
   var recognitionLabel: UILabel!
+    
+    var initialZoomScale: CGFloat = 1
   
   @IBOutlet weak var informationLabel: UILabel!
   @IBOutlet weak var previewView: UIView!
@@ -100,34 +102,54 @@ class ViewController: UIViewController {
     // RealTimeEngine Setup
     
     let swiftyTesseract = SwiftyTesseract(language: .english, dataSource: Bundle.main, engineMode: .lstmOnly)
-    engine = RealTimeEngine(swiftyTesseract: swiftyTesseract, desiredReliability: .verifiable) { [weak self] recognizedString in
-      AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-      DispatchQueue.main.async { 
-        self?.recognitionLabel.text = recognizedString
-      }
-      self?.recognitionIsRunning = false
+    engine = RealTimeEngine(swiftyTesseract: swiftyTesseract, desiredReliability: .verifiable) { [unowned self] result in
+       
+        switch result{
+        case .stablyRecognized(_):
+            self.recognitionIsRunning = false
+            DispatchQueue.main.async {
+              self.recognitionLabel.text = result.description
+                let feedback=UINotificationFeedbackGenerator()
+                feedback.notificationOccurred(.success)
+            }
+        case .sceneUnstable where self.engine.recognitionIsActive == true, .recognizing where self.engine.recognitionIsActive == true:
+            DispatchQueue.main.async {
+              self.recognitionLabel.text = result.description
+            }
+        default:
+            break
+        }
     }
     
     engine.recognitionIsActive = false
+    previewView.layer.addSublayer(excludeLayer)
     engine.startPreview()
   }
   
   override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
     engine.bindPreviewLayer(to: previewView)
     engine.regionOfInterest = regionOfInterest.frame
-    previewView.layer.addSublayer(regionOfInterest.layer)
+    excludeLayer.frame=previewView.bounds
     fillOpaqueAroundAreaOfInterest(parentView: previewView, areaOfInterest: regionOfInterest)
+    
   }
   
   override func viewWillAppear(_ animated: Bool) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-    appDelegate.shouldRotate = false
+    super.viewWillAppear(animated)
+
   }
   
-  override func viewWillDisappear(_ animated: Bool) {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-    appDelegate.shouldRotate = true
-  }
+   override func viewWillDisappear(_ animated: Bool) {
+     super.viewWillDisappear(animated)
+
+   }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        let deviceOrientation = UIDevice.current.orientation
+        self.engine.deviceOrientation=deviceOrientation
+    }
   
   private func fillOpaqueAroundAreaOfInterest(parentView: UIView, areaOfInterest: UIView) {
     let parentViewBounds = parentView.bounds
@@ -139,7 +161,6 @@ class ViewController: UIViewController {
     path.usesEvenOddFillRule = true
     
     excludeLayer.path = path.cgPath
-    parentView.layer.addSublayer(excludeLayer)
   }
   
   @objc func handlePan(_ sender: UIPanGestureRecognizer) {
@@ -173,4 +194,17 @@ class ViewController: UIViewController {
     let flashlightButtonTitle = device.torchMode == .off ? "Flashlight On" : "Flashlight Off"
     flashlightButton.title = flashlightButtonTitle
   }
+    
+    @IBAction func pinched(_ sender:UIPinchGestureRecognizer){
+        switch sender.state {
+        case .began:
+            self.initialZoomScale = self.engine.zoomScale
+        case .changed:
+            let newScale = self.initialZoomScale * sender.scale
+            self.engine.zoomScale = newScale
+        default:
+            break
+        }
+        
+    }
 }

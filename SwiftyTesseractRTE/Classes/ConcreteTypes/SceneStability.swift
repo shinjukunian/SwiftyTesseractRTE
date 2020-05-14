@@ -9,7 +9,7 @@
 import Foundation
 import Vision
 import AVFoundation
-
+import CoreImage
 
 enum SceneStabilityState: Equatable, CustomStringConvertible{
     
