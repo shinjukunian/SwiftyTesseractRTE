@@ -99,7 +99,11 @@ public class RealTimeEngine: NSObject, SceneStability {
       /// allow the preview to be active without processing incoming video frames.
       /// If it is not desired for recognition to be active after initialization, set this
       /// value to false immediately after creating an instance of SwiftyTesseractRTE
-    public var recognitionIsActive: Bool = true
+    public var recognitionIsActive: Bool = true{
+        didSet{
+            self.recognitionQueue.clear()
+        }
+    }
       
       /// The quality of the previewLayer video session. The default is set to .medium. Changing this
       /// setting will only affect how the video is displayed to the user and will not affect the
@@ -276,9 +280,8 @@ public class RealTimeEngine: NSObject, SceneStability {
         case .failure(let errror):
             print(errror.localizedDescription)
         }
-        guard self.recognitionQueue.allValuesMatch,
-               let recognitionResult = self.recognitionQueue.dequeue()
-             else { return }
+        guard let recognitionResult = self.recognitionQueue.recognizedValue
+             else {return }
           
         if let handler=self.handler{
             handler(.stablyRecognized(text: recognitionResult))
@@ -306,6 +309,7 @@ extension RealTimeEngine: AVCaptureVideoDataOutputSampleBufferDelegate {
         }
         else{
             if let handler=self.handler{
+                self.recognitionQueue.clear()
                 handler(.sceneUnstable)
             }
         }

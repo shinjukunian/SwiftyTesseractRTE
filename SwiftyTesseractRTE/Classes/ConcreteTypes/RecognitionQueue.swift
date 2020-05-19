@@ -7,41 +7,47 @@
 //
 
 struct RecognitionQueue<T: Hashable> {
-  private var values: [T]
+    private var values: [T:Int]
   
-  let size: Int
+    let desiredConfidence: Int
 
-  var allValuesMatch: Bool {
-    guard size == values.count else { return false }
-    return Set(values).count == 1
-  }
-  
-  init(maxElements: Int) {
-    size = maxElements
-    values = [T]()
-  }
-  
-  mutating func enqueue(_ value: T) {
-    values.append(value)
-    if values.count > size {
-      dequeue()
+    @inlinable
+    func recognizedValue(confidence:Int)->T?{
+        if let maxValue=self.values.max(by: {v1,v2 in
+            return v1.value < v2.value
+        }), maxValue.value >= self.desiredConfidence{
+            return maxValue.key
+        }
+        return nil
     }
-  }
+    
+    var recognizedValue: T? {
+        return self.recognizedValue(confidence: self.desiredConfidence)
+    }
   
-  @discardableResult
-  mutating func dequeue() -> T? {
-    if values.isEmpty { return nil }
-    return values.remove(at: 0)
-  }
+    init(desiredConfidence: Int) {
+        self.desiredConfidence = desiredConfidence
+        values = [T:Int]()
+    }
   
-  mutating func clear() {
-    values.removeAll()
-  }
+    mutating func enqueue(_ value: T) {
+        if let count=self.values[value]{
+            self.values[value] = count+1
+        }
+        else{
+            self.values[value]=1
+        }
+    }
+  
+  
+    mutating func clear() {
+        values.removeAll()
+    }
 
 }
 
 extension RecognitionQueue {
-  init(desiredReliability: RecognitionReliability) {
-    self.init(maxElements: desiredReliability.numberOfResults)
-  }
+    init(desiredReliability: RecognitionReliability) {
+        self.init(desiredConfidence: desiredReliability.numberOfResults)
+    }
 }
