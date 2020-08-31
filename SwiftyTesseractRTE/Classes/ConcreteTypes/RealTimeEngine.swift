@@ -9,7 +9,7 @@
 import SwiftyTesseract
 import AVFoundation
 import Vision
-
+import UIKit
 
 /// A class to perform real-time optical character recognition
 public class RealTimeEngine: NSObject, SceneStability {
@@ -40,7 +40,7 @@ public class RealTimeEngine: NSObject, SceneStability {
     private var recognitionQueue: RecognitionQueue<String>
       
       // MARK: - Private constants
-    private let swiftyTesseract: SwiftyTesseract
+    private let swiftyTesseract: Tesseract
     private let imageProcessor: AVSampleProcessor
     private let avManager: AVManager
     lazy var sequenceRequestHandler = VNSequenceRequestHandler()
@@ -129,7 +129,7 @@ public class RealTimeEngine: NSObject, SceneStability {
       ///   - cameraQuality:      The desired camera quality output to be seen by the end user. The default is `.medium`.
       ///   Anything higher than `.medium` has no impact on recognition reliability
       ///   - onRecognitionComplete: Action to be performed after successful recognition
-      public convenience init(swiftyTesseract: SwiftyTesseract,
+      public convenience init(swiftyTesseract: Tesseract,
                               desiredReliability: RecognitionReliability,
                               cameraQuality: AVCaptureSession.Preset = .medium,
                               onRecognitionComplete: ((RecognitionState) -> ())? = nil) {
@@ -150,7 +150,7 @@ public class RealTimeEngine: NSObject, SceneStability {
       ///   - cameraQuality:      The desired camera quality output to be seen by the end user. The default is .medium.
       ///                         Anything higher than .medium has no impact on recognition reliability
       ///   - onRecognitionComplete: Action to be performed after successful recognition
-      public convenience init(swiftyTesseract: SwiftyTesseract,
+      public convenience init(swiftyTesseract: Tesseract,
                               desiredReliability: RecognitionReliability,
                               imageProcessor: AVSampleProcessor,
                               cameraQuality: AVCaptureSession.Preset = .medium,
@@ -171,7 +171,7 @@ public class RealTimeEngine: NSObject, SceneStability {
       ///   - desiredReliability: The desired reliability of the recognition results.
       ///   - avManager: Manages the AVCaptureSession
       ///   - onRecognitionComplete: Action to be performed after successful recognition
-      public convenience init(swiftyTesseract: SwiftyTesseract,
+      public convenience init(swiftyTesseract: Tesseract,
                               desiredReliability: RecognitionReliability,
                               avManager: AVManager,
                               onRecognitionComplete: ((RecognitionState) -> ())? = nil) {
@@ -190,7 +190,7 @@ public class RealTimeEngine: NSObject, SceneStability {
       ///   - imageProcessor: Performs conversion and processing from `CMSampleBuffer` to `UIImage`
       ///   - avManager: Manages the AVCaptureSession
       ///   - onRecognitionComplete: Action to be performed after successful recognition
-      public convenience init(swiftyTesseract: SwiftyTesseract,
+      public convenience init(swiftyTesseract: Tesseract,
                               desiredReliability: RecognitionReliability,
                               imageProcessor: AVSampleProcessor,
                               avManager: AVManager,
@@ -206,7 +206,7 @@ public class RealTimeEngine: NSObject, SceneStability {
       }
       
       
-      init(swiftyTesseract: SwiftyTesseract,
+      init(swiftyTesseract: Tesseract,
            recognitionQueue: RecognitionQueue<String>,
            imageProcessor: AVSampleProcessor = ImageProcessor(),
            avManager: AVManager,

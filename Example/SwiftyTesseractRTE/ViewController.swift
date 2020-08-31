@@ -101,7 +101,7 @@ class ViewController: UIViewController {
     
     // RealTimeEngine Setup
     
-    let swiftyTesseract = SwiftyTesseract(language: .english, dataSource: Bundle.main, engineMode: .lstmOnly)
+    let swiftyTesseract = Tesseract(language: .english, dataSource: Bundle.main, engineMode: .lstmOnly)
     engine = RealTimeEngine(swiftyTesseract: swiftyTesseract, desiredReliability: .verifiable) { [unowned self] result in
        
         switch result{

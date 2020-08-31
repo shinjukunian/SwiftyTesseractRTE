@@ -3,12 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5A9065EB2467A13400294A2C /* SwiftyTesseract.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A9065E82467A12E00294A2C /* SwiftyTesseract.framework */; };
-		5A9065EC2467A13400294A2C /* SwiftyTesseract.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5A9065E82467A12E00294A2C /* SwiftyTesseract.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5A9065FE2467A1A900294A2C /* DispatchQueue+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9065F12467A1A900294A2C /* DispatchQueue+Extension.swift */; };
 		5A9065FF2467A1A900294A2C /* CustomOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9065F32467A1A900294A2C /* CustomOperators.swift */; };
 		5A9066002467A1A900294A2C /* RecognitionReliability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9065F52467A1A900294A2C /* RecognitionReliability.swift */; };
@@ -18,6 +16,8 @@
 		5A9066042467A1A900294A2C /* RecognitionQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9065F92467A1A900294A2C /* RecognitionQueue.swift */; };
 		5A9066052467A1A900294A2C /* AVManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9065FB2467A1A900294A2C /* AVManager.swift */; };
 		5A9066062467A1A900294A2C /* AVSampleProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9065FC2467A1A900294A2C /* AVSampleProcessor.swift */; };
+		5AEB063924FC85DE00B994EA /* SwiftyTesseract in Frameworks */ = {isa = PBXBuildFile; productRef = 5AEB063824FC85DE00B994EA /* SwiftyTesseract */; };
+		5AEB063B24FC877500B994EA /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEB063A24FC877500B994EA /* Package.swift */; };
 		5AF8CDCC246CDE2800E58809 /* SceneStability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF8CDC8246CDE2800E58809 /* SceneStability.swift */; };
 		5AF8CDCE246CDE3E00E58809 /* UIDeviceOrientation + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF8CDCD246CDE3E00E58809 /* UIDeviceOrientation + Extensions.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
@@ -31,20 +31,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		5A9065E72467A12E00294A2C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5A9065E12467A12E00294A2C /* SwiftyTesseract.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6271A3D42047A0D7005DB23B;
-			remoteInfo = SwiftyTesseract;
-		};
-		5A9065E92467A12E00294A2C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5A9065E12467A12E00294A2C /* SwiftyTesseract.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6271A3DD2047A0D7005DB23B;
-			remoteInfo = SwiftyTesseractTests;
-		};
 		607FACE61AFB9204008FA782 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
@@ -61,7 +47,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5A9065EC2467A13400294A2C /* SwiftyTesseract.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,7 +54,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5A9065E12467A12E00294A2C /* SwiftyTesseract.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyTesseract.xcodeproj; path = ../SwiftyTesseract/SwiftyTesseract/SwiftyTesseract.xcodeproj; sourceTree = "<group>"; };
 		5A9065F12467A1A900294A2C /* DispatchQueue+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extension.swift"; sourceTree = "<group>"; };
 		5A9065F32467A1A900294A2C /* CustomOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomOperators.swift; sourceTree = "<group>"; };
 		5A9065F52467A1A900294A2C /* RecognitionReliability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecognitionReliability.swift; sourceTree = "<group>"; };
@@ -79,6 +63,7 @@
 		5A9065F92467A1A900294A2C /* RecognitionQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecognitionQueue.swift; sourceTree = "<group>"; };
 		5A9065FB2467A1A900294A2C /* AVManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVManager.swift; sourceTree = "<group>"; };
 		5A9065FC2467A1A900294A2C /* AVSampleProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVSampleProcessor.swift; sourceTree = "<group>"; };
+		5AEB063A24FC877500B994EA /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Package.swift; path = ../Package.swift; sourceTree = "<group>"; };
 		5AF8CDC8246CDE2800E58809 /* SceneStability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneStability.swift; sourceTree = "<group>"; };
 		5AF8CDCD246CDE3E00E58809 /* UIDeviceOrientation + Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDeviceOrientation + Extensions.swift"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* SwiftyTesseractRTE_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyTesseractRTE_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,7 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A9065EB2467A13400294A2C /* SwiftyTesseract.framework in Frameworks */,
+				5AEB063924FC85DE00B994EA /* SwiftyTesseract in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,15 +110,6 @@
 				DE50B245C6ECF6E18FA50AC1 /* Pods_SwiftyTesseractRTE_Tests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		5A9065E22467A12E00294A2C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				5A9065E82467A12E00294A2C /* SwiftyTesseract.framework */,
-				5A9065EA2467A12E00294A2C /* SwiftyTesseractTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		5A9065EE2467A1A900294A2C /* Classes */ = {
@@ -190,8 +166,8 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				5AEB063A24FC877500B994EA /* Package.swift */,
 				5A9065EE2467A1A900294A2C /* Classes */,
-				5A9065E12467A12E00294A2C /* SwiftyTesseract.xcodeproj */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for SwiftyTesseractRTE */,
 				607FACE81AFB9204008FA782 /* Tests */,
@@ -284,6 +260,9 @@
 			dependencies = (
 			);
 			name = SwiftyTesseractRTE_Example;
+			packageProductDependencies = (
+				5AEB063824FC85DE00B994EA /* SwiftyTesseract */,
+			);
 			productName = SwiftyTesseractRTE;
 			productReference = 607FACD01AFB9204008FA782 /* SwiftyTesseractRTE_Example.app */;
 			productType = "com.apple.product-type.application";
@@ -313,7 +292,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
@@ -338,14 +317,11 @@
 				Base,
 			);
 			mainGroup = 607FACC71AFB9204008FA782;
+			packageReferences = (
+				5AEB063724FC85DE00B994EA /* XCRemoteSwiftPackageReference "SwiftyTesseract" */,
+			);
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 5A9065E22467A12E00294A2C /* Products */;
-					ProjectRef = 5A9065E12467A12E00294A2C /* SwiftyTesseract.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				607FACCF1AFB9204008FA782 /* SwiftyTesseractRTE_Example */,
@@ -353,23 +329,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		5A9065E82467A12E00294A2C /* SwiftyTesseract.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftyTesseract.framework;
-			remoteRef = 5A9065E72467A12E00294A2C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		5A9065EA2467A12E00294A2C /* SwiftyTesseractTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SwiftyTesseractTests.xctest;
-			remoteRef = 5A9065E92467A12E00294A2C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		607FACCE1AFB9204008FA782 /* Resources */ = {
@@ -408,6 +367,7 @@
 				5A9065FF2467A1A900294A2C /* CustomOperators.swift in Sources */,
 				5AF8CDCE246CDE3E00E58809 /* UIDeviceOrientation + Extensions.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				5AEB063B24FC877500B994EA /* Package.swift in Sources */,
 				5A9066052467A1A900294A2C /* AVManager.swift in Sources */,
 				5AF8CDCC246CDE2800E58809 /* SceneStability.swift in Sources */,
 				5A9066002467A1A900294A2C /* RecognitionReliability.swift in Sources */,
@@ -475,6 +435,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -500,7 +461,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -531,6 +492,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -549,10 +511,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -563,8 +526,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = DVQ96RL2KL;
 				INFOPLIST_FILE = SwiftyTesseractRTE/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -580,8 +546,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = DVQ96RL2KL;
 				INFOPLIST_FILE = SwiftyTesseractRTE/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -604,7 +573,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -621,7 +594,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -660,6 +637,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5AEB063724FC85DE00B994EA /* XCRemoteSwiftPackageReference "SwiftyTesseract" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:SwiftyTesseract/SwiftyTesseract.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5AEB063824FC85DE00B994EA /* SwiftyTesseract */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5AEB063724FC85DE00B994EA /* XCRemoteSwiftPackageReference "SwiftyTesseract" */;
+			productName = SwiftyTesseract;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 607FACC81AFB9204008FA782 /* Project object */;
 }
