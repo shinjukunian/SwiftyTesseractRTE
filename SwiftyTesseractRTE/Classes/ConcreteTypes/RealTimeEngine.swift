@@ -51,7 +51,7 @@ public class RealTimeEngine: NSObject, SceneStability {
     var currentlyAnalyzedPixelBuffer: CVPixelBuffer?
     var currentFrame=0
     
-    var deviceOrientation : UIDeviceOrientation = UIDevice.current.orientation{
+    public var deviceOrientation : UIDeviceOrientation = UIDevice.current.orientation{
         didSet{
             if let newVideoOrientation = AVCaptureVideoOrientation(deviceOrientation: deviceOrientation){
                 self.avManager.videoOrientation = newVideoOrientation
@@ -79,7 +79,7 @@ public class RealTimeEngine: NSObject, SceneStability {
         }
     }
     
-    var zoomScale:CGFloat{
+    public var zoomScale:CGFloat{
         set{
             if let z=self.avManager as? ZoomableAVManager{
                 z.zoomFactor = newValue
