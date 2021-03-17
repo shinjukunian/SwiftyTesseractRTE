@@ -6,16 +6,16 @@
         "repositoryURL": "https://github.com/SwiftyTesseract/libtesseract.git",
         "state": {
           "branch": null,
-          "revision": "d8b5fab45f5dc0b1d34b0ca7bf6620b72426adf1",
-          "version": "0.1.0"
+          "revision": "214a36e04d740795d7ba2f07c6108944d0136f8a",
+          "version": "0.2.0"
         }
       },
       {
         "package": "SwiftyTesseract",
         "repositoryURL": "https://github.com/SwiftyTesseract/SwiftyTesseract.git",
         "state": {
-          "branch": "develop",
-          "revision": "5b3091b189fc58ff1a31078fc944f1c8b6f97e77",
+          "branch": "master",
+          "revision": "1393d15d0278673dd89f2ba21d3fb748f99e02ce",
           "version": null
         }
       }

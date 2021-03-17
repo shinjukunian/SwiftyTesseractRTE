@@ -12,7 +12,7 @@ let package = Package(
       name: "SwiftyTesseractRTE",
       targets: ["SwiftyTesseractRTE"]),
   ],
-    dependencies: [.package(name: "SwiftyTesseract", url: "https://github.com/SwiftyTesseract/SwiftyTesseract.git", .branch("develop"))],
+    dependencies: [.package(name: "SwiftyTesseract", url: "https://github.com/SwiftyTesseract/SwiftyTesseract.git", .branch("master"))],
     
     targets: [
         .target(name: "SwiftyTesseractRTE", dependencies: [.byName(name: "SwiftyTesseract")], path: "SwiftyTesseractRTE/Classes", exclude: [String](), sources: nil, resources: nil, publicHeadersPath: nil, cSettings: nil, cxxSettings: nil, swiftSettings: nil, linkerSettings: nil)
