@@ -317,3 +317,14 @@ extension RealTimeEngine: AVCaptureVideoDataOutputSampleBufferDelegate {
     }
   
 }
+
+
+extension RealTimeEngine{
+    public func captureImage(completion:@escaping (UIImage?)->Void){
+        guard let manager = self.avManager as? CapturingAVManager else {
+            completion(nil)
+            return
+        }
+        manager.captureImage(context: self.ciContext, handler: completion)
+    }
+}

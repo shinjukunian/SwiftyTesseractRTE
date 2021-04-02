@@ -46,6 +46,9 @@ class VideoManager: AVManager, ZoomableAVManager {
     var maxZoomFactor: CGFloat{
         return (self.captureSession.inputs.first as? AVCaptureDeviceInput)?.device.maxAvailableVideoZoomFactor ?? 1
     }
+    
+    
+    fileprivate var photoCaptureDelegate:PhotoCaptureDelegate?
 
     init(previewLayer: AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer(),
        captureSession: AVCaptureSession = AVCaptureSession(),
@@ -93,12 +96,13 @@ class VideoManager: AVManager, ZoomableAVManager {
 
     private func configure(_ captureSession: AVCaptureSession) {
         guard isAuthorized(for: mediaType) else { return }
-
+        captureSession.beginConfiguration()
         captureSession.sessionPreset = cameraQuality
         configureInput(for: captureSession)
 
         let connection = configureOutputConnection(for: captureSession)
         configureOutput(for: connection)
+        captureSession.commitConfiguration()
     }
 
     private func configureInput(for captureSession: AVCaptureSession) {
@@ -117,6 +121,13 @@ class VideoManager: AVManager, ZoomableAVManager {
 
         guard captureSession.canAddOutput(videoOutput) else { return nil }
         captureSession.addOutput(videoOutput)
+        
+        let photoOutput = AVCapturePhotoOutput()
+        photoOutput.isHighResolutionCaptureEnabled = true
+        
+        guard captureSession.canAddOutput(photoOutput) else { return nil}
+        captureSession.sessionPreset = .photo
+        captureSession.addOutput(photoOutput)
 
         return videoOutput.connection(with: mediaType)
     }
@@ -172,5 +183,60 @@ class VideoManager: AVManager, ZoomableAVManager {
         get{
             return (self.captureSession.inputs.first as? AVCaptureDeviceInput)?.device.videoZoomFactor ?? 1
         }
+    }
+}
+
+extension VideoManager: CapturingAVManager{
+    func captureImage(context:CIContext, handler:@escaping (UIImage?)->Void){
+        guard let photoOutput=self.captureSession.outputs.compactMap({return $0 as? AVCapturePhotoOutput}).first  else {return}
+        let types=photoOutput.availablePhotoPixelFormatTypes
+        let photoSettings=AVCapturePhotoSettings(format: [kCVPixelBufferPixelFormatTypeKey as String:types[0]])
+//        if photoOutput.availablePhotoCodecTypes.contains(.hevc) {
+//            photoSettings = AVCapturePhotoSettings(format:
+//                [AVVideoCodecKey: AVVideoCodecType.hevc])
+//        } else {
+//            photoSettings = AVCapturePhotoSettings()
+//        }
+        
+        photoSettings.isAutoStillImageStabilizationEnabled = photoOutput.isStillImageStabilizationSupported
+        let d=PhotoCaptureDelegate(context: context, handler: {[weak self] image in
+            self?.photoCaptureDelegate=nil
+            handler(image)
+        })
+        photoOutput.capturePhoto(with: photoSettings, delegate: d)
+        self.photoCaptureDelegate=d
+        
+    }
+}
+
+
+class PhotoCaptureDelegate: NSObject, AVCapturePhotoCaptureDelegate{
+    typealias PhotoCaptureDelegateHandler = (UIImage?)->Void
+    let handler:PhotoCaptureDelegateHandler
+    let context:CIContext
+    
+    init(context:CIContext, handler:@escaping PhotoCaptureDelegateHandler) {
+        self.handler=handler
+        self.context=context
+        super.init()
+    }
+    
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        guard let pixelBuffer=photo.pixelBuffer else{
+            handler(nil)
+            return
+        }
+        
+        let ciImage=CIImage(cvPixelBuffer: pixelBuffer, options: [CIImageOption.applyOrientationProperty:true])
+        let transform=ciImage.orientationTransform(for: CGImagePropertyOrientation.right)
+        let corrected=ciImage.transformed(by: transform)
+        
+        guard let cgCorr=context.createCGImage(corrected, from: corrected.extent) else{
+            handler(nil)
+            return
+        }
+        
+        let uiCorr=UIImage(cgImage: cgCorr)
+        handler(uiCorr)
     }
 }

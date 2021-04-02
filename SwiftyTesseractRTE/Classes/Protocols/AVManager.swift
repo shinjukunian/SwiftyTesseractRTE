@@ -7,6 +7,8 @@
 //
 
 import AVFoundation
+import CoreImage
+import UIKit
 
 /// To be implemented if custom AVFoundation logic is needed. This may be desireable if using
 /// RealTimeEngine in tandem with another class or library that requires CMSampleBuffers
@@ -39,4 +41,8 @@ public protocol ZoomableAVManager: AVManager{
     var minZoomFactor: CGFloat {get}
     var maxZoomFactor: CGFloat {get}
     var zoomFactor: CGFloat {get set}
+}
+
+protocol CapturingAVManager: AVManager {
+    func captureImage(context:CIContext, handler:@escaping (UIImage?)->Void)
 }
