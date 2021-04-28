@@ -27,7 +27,7 @@ enum SceneStabilityState: Equatable, CustomStringConvertible{
 }
 
 
-protocol SceneStability:class {
+protocol SceneStability:AnyObject {
     var transpositionHistoryPoints: [CGPoint] {set get}
     var maximumHistoryLength : Int {get}
     var previousPixelBuffer: CVPixelBuffer? {get set}

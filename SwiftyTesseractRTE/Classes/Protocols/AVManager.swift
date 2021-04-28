@@ -13,7 +13,7 @@ import UIKit
 /// To be implemented if custom AVFoundation logic is needed. This may be desireable if using
 /// RealTimeEngine in tandem with another class or library that requires CMSampleBuffers
 /// for processing.
-public protocol AVManager: class {
+public protocol AVManager: AnyObject {
   /// The `AVCaptureVideoPreviewLayer` displayed to the user
   var previewLayer: AVCaptureVideoPreviewLayer { get }
   /// The quality of the previewLayer video session.
